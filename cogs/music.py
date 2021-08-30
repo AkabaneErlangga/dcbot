@@ -88,32 +88,14 @@ class Music(commands.Cog):
     @commands.command()
     async def skip(self, ctx: commands.Context):
         '''Puts in your vote to skip the currently played song.'''
-
         voice = self.voice_clients.get(ctx.guild)
-        queue = self.music_queues.get(ctx.guild)
 
         if not self.client_in_same_channel(ctx.message.author, ctx.guild):
             await ctx.send("You're not in a voice channel with me.")
-            return
-
-        if voice is None or not voice.is_playing():
+        elif voice is None or not voice.is_playing():
             await ctx.send("I'm not playing a song right now.")
-            return
-
-        if ctx.author in queue.skip_voters:
-            await ctx.send("You've already voted to skip this song.")
-            return
-
-        channel = ctx.message.author.voice.channel
-        required_votes = round(len(channel.members) / 2)
-
-        queue.add_skip_vote(ctx.author)
-
-        if len(queue.skip_voters) >= required_votes:
-            await ctx.send('Skipping song after successful vote.')
-            voice.stop()
         else:
-            await ctx.send(f'You voted to skip this song. {required_votes-len(queue.skip_voters)} more votes are required.')
+            voice.stop()
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
