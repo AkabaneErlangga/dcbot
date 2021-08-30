@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import firebase
 
-TOKEN = "ODgxODE3MTExNTY2MTEwNzMw.YSyWLg.lkwVSuBWIzmeIJYtG4XKy5bOfpc"
+TOKEN = "InputYourTokenHere"
 
 client = commands.Bot(command_prefix='.')
 @client.event
